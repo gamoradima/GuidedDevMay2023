@@ -11,9 +11,74 @@ define("UsrMyRealtyClassic1Page", [], function() {
 					"masterColumn": "Id",
 					"detailColumn": "UsrMyRealtyClassic"
 				}
+			},
+			"UsrSchemacf3405ddDetail345a6998": {
+				"schemaName": "UsrRealtyVisitClassicDetailGrid",
+				"entitySchemaName": "UsrRealtyVisitClassic",
+				"filter": {
+					"detailColumn": "UsrParentRealty",
+					"masterColumn": "Id"
+				}
 			}
 		}/**SCHEMA_DETAILS*/,
-		businessRules: /**SCHEMA_BUSINESS_RULES*/{}/**SCHEMA_BUSINESS_RULES*/,
+		businessRules: /**SCHEMA_BUSINESS_RULES*/{
+			"UsrComment": {
+				"7632a40c-9084-4c96-8536-9eb2eeba00c1": {
+					"uId": "7632a40c-9084-4c96-8536-9eb2eeba00c1",
+					"enabled": true,
+					"removed": false,
+					"ruleType": 0,
+					"property": 2,
+					"logical": 0,
+					"conditions": [
+						{
+							"comparisonType": 7,
+							"leftExpression": {
+								"type": 1,
+								"attribute": "UsrPriceUSD"
+							},
+							"rightExpression": {
+								"type": 0,
+								"value": 100000,
+								"dataValueType": 5
+							}
+						}
+					]
+				}
+			},
+			"UsrManager": {
+				"7ce8097e-8927-4afa-bf13-edc62e74db94": {
+					"uId": "7ce8097e-8927-4afa-bf13-edc62e74db94",
+					"enabled": true,
+					"removed": false,
+					"ruleType": 0,
+					"property": 0,
+					"logical": 0,
+					"conditions": [
+						{
+							"comparisonType": 2,
+							"leftExpression": {
+								"type": 1,
+								"attribute": "UsrType"
+							}
+						}
+					]
+				},
+				"0939685c-8cba-485e-9fb0-5ba47cbaa1ef": {
+					"uId": "0939685c-8cba-485e-9fb0-5ba47cbaa1ef",
+					"enabled": true,
+					"removed": false,
+					"ruleType": 1,
+					"baseAttributePatch": "Type",
+					"comparisonType": 3,
+					"autoClean": false,
+					"autocomplete": false,
+					"type": 0,
+					"value": "60733efc-f36b-1410-a883-16d83cab0980",
+					"dataValueType": 10
+				}
+			}
+		}/**SCHEMA_BUSINESS_RULES*/,
 		methods: {},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[
@@ -149,10 +214,10 @@ define("UsrMyRealtyClassic1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "NotesAndFilesTab",
+				"name": "Tab2c2af08cTabLabel",
 				"values": {
 					"caption": {
-						"bindTo": "Resources.Strings.NotesAndFilesTabCaption"
+						"bindTo": "Resources.Strings.Tab2c2af08cTabLabelTabCaption"
 					},
 					"items": [],
 					"order": 0
@@ -160,6 +225,31 @@ define("UsrMyRealtyClassic1Page", [], function() {
 				"parentName": "Tabs",
 				"propertyName": "tabs",
 				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "UsrSchemacf3405ddDetail345a6998",
+				"values": {
+					"itemType": 2,
+					"markerValue": "added-detail"
+				},
+				"parentName": "Tab2c2af08cTabLabel",
+				"propertyName": "items",
+				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "NotesAndFilesTab",
+				"values": {
+					"caption": {
+						"bindTo": "Resources.Strings.NotesAndFilesTabCaption"
+					},
+					"items": [],
+					"order": 1
+				},
+				"parentName": "Tabs",
+				"propertyName": "tabs",
+				"index": 1
 			},
 			{
 				"operation": "insert",
@@ -217,7 +307,7 @@ define("UsrMyRealtyClassic1Page", [], function() {
 				"operation": "merge",
 				"name": "ESNTab",
 				"values": {
-					"order": 1
+					"order": 2
 				}
 			}
 		]/**SCHEMA_DIFF*/
