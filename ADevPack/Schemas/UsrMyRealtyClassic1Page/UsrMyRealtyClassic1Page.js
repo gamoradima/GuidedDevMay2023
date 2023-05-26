@@ -1,7 +1,21 @@
-define("UsrMyRealtyClassic1Page", [], function() {
+define("UsrMyRealtyClassic1Page", ["ServiceHelper"], function(ServiceHelper) {
 	return {
 		entitySchemaName: "UsrMyRealtyClassic",
-		attributes: {},
+		attributes: {
+			"UsrCommissionUSD": {
+				dependencies: [
+					{
+						columns: ["UsrPriceUSD", "UsrOfferType"],
+						methodName: "calculateCommission"
+					}
+				]
+			},
+			"UsrOfferType": {
+				lookupListConfig: {
+					columns: ["UsrCommissionMultiplier"]
+				}
+			}
+		},
 		modules: /**SCHEMA_MODULES*/{}/**SCHEMA_MODULES*/,
 		details: /**SCHEMA_DETAILS*/{
 			"Files": {
@@ -79,7 +93,77 @@ define("UsrMyRealtyClassic1Page", [], function() {
 				}
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
-		methods: {},
+		methods: {
+			onRunWebServiceButtonClick: function() {
+				var typeObject = this.get("UsrType");
+				if (!typeObject) {
+					return;
+				}
+				var typeId = typeObject.value;
+				var offerTypeObject = this.get("UsrOfferType");
+				if (!offerTypeObject) {
+					return;
+				}
+				var offerTypeId = offerTypeObject.value;
+				var params = {
+					realtyTypeId: typeId,
+					realtyOfferTypeId: offerTypeId,
+					entityName: "UsrMyRealtyClassic"
+				};				
+				this.console.log("1");
+				ServiceHelper.callService("RealtyService", "GetTotalAmountByTypeId", this.getWebServiceResult, params, this);
+				this.console.log("2");
+			},
+			getWebServiceResult: function(response, success) {
+				this.console.log("3");
+				this.Terrasoft.showInformation("Total amount by typeId: " + response.GetTotalAmountByTypeIdResult);
+			},
+
+			calculateCommission: function() {
+				var price = this.get("UsrPriceUSD");
+				if (!price) {
+					price = 0;
+				}
+				var offerTypeObject = this.get("UsrOfferType");
+				var coeff = 0;
+				if (offerTypeObject) {
+					coeff = offerTypeObject.UsrCommissionMultiplier;
+				}
+				var commission = price * coeff;
+				this.set("UsrCommissionUSD", commission);
+			},
+
+			onEntityInitialized: function() {
+				this.callParent(arguments);
+				this.calculateCommission();
+			},
+			onMyButtonClick: function() {
+				this.console.log("MyButton pressed");
+				Terrasoft.showInformation("My button pressed");
+			},
+			getMyButtonEnabled: function() {
+				var result = true;
+				var name = this.get("UsrName");
+				if (!name) {
+					result = false;
+				}
+				return result;
+			},
+			positiveValueValidator: function(value, column) {
+				var msg = "";
+				if (value < 0) {
+					msg = this.get("Resources.Strings.ValueMustBeGreaterThanZero");
+				}
+				return {
+					invalidMessage: msg
+				};
+			},
+			setValidationConfig: function() {
+				this.callParent(arguments);
+				this.addColumnValidator("UsrPriceUSD", this.positiveValueValidator);
+				this.addColumnValidator("UsrArea", this.positiveValueValidator);
+			},
+		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[
 			{
@@ -126,7 +210,7 @@ define("UsrMyRealtyClassic1Page", [], function() {
 						"colSpan": 24,
 						"rowSpan": 1,
 						"column": 0,
-						"row": 2,
+						"row": 3,
 						"layoutName": "ProfileContainer"
 					},
 					"bindTo": "UsrArea",
@@ -135,6 +219,83 @@ define("UsrMyRealtyClassic1Page", [], function() {
 				"parentName": "ProfileContainer",
 				"propertyName": "items",
 				"index": 2
+			},
+            /* Metadata to add the custom button to the page. */
+            {
+                /*  Run the operation that inserts the element to the page. */
+                "operation": "insert",
+                /* The meta name of the parent container to add the button. */
+                "parentName": "ProfileContainer",
+                /* Add the button to the element collection of the parent element. */
+                "propertyName": "items",
+                /* The meta name of the added button. */
+                "name": "MyButton",
+                /* The properties to pass to the element’s constructor. */
+                "values": {
+					"layout": {
+						"colSpan": 10,
+						"rowSpan": 1,
+						"column": 0,
+						"row": 4,
+						"layoutName": "ProfileContainer"
+					},
+                    /* Set the type of the added element to ‘button.’ */
+                    "itemType": Terrasoft.ViewItemType.BUTTON,
+                    /* Bind the button title to the localizable schema string. */
+                    "caption": {bindTo: "Resources.Strings.MyButtonCaption"},
+                    /* Bind the button click handler method. */
+                    "click": {bindTo: "onMyButtonClick"},
+                    /* Bind the button availability property. */
+                    "enabled": {bindTo: "getMyButtonEnabled"},
+                    /* The display style of the button. */
+                    "style": Terrasoft.controls.ButtonEnums.style.GREEN
+                }
+            },
+            {
+                /*  Run the operation that inserts the element to the page. */
+                "operation": "insert",
+                /* The meta name of the parent container to add the button. */
+                "parentName": "ProfileContainer",
+                /* Add the button to the element collection of the parent element. */
+                "propertyName": "items",
+                /* The meta name of the added button. */
+                "name": "RunWebServiceButton",
+                /* The properties to pass to the element’s constructor. */
+                "values": {
+					"layout": {
+						"colSpan": 14,
+						"rowSpan": 1,
+						"column": 10,
+						"row": 4,
+						"layoutName": "ProfileContainer"
+					},
+                    /* Set the type of the added element to ‘button.’ */
+                    "itemType": Terrasoft.ViewItemType.BUTTON,
+                    /* Bind the button title to the localizable schema string. */
+                    "caption": {bindTo: "Resources.Strings.RunWebServiceButtonCaption"},
+                    /* Bind the button click handler method. */
+                    "click": {bindTo: "onRunWebServiceButtonClick"},
+                    /* The display style of the button. */
+                    "style": Terrasoft.controls.ButtonEnums.style.RED
+                }
+            },
+			{
+				"operation": "insert",
+				"name": "FLOAT12a33457-9904-4f7d-82ea-c292fbe5dec9",
+				"values": {
+					"layout": {
+						"colSpan": 24,
+						"rowSpan": 1,
+						"column": 0,
+						"row": 2,
+						"layoutName": "ProfileContainer"
+					},
+					"bindTo": "UsrCommissionUSD",
+					"enabled": false
+				},
+				"parentName": "ProfileContainer",
+				"propertyName": "items",
+				"index": 3
 			},
 			{
 				"operation": "insert",

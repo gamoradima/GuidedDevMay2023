@@ -6,6 +6,8 @@
 			<Item Name="LocalizableStrings.addRecord_cbi2rfi_caption.Value" Value="Add new" />
 			<Item Name="LocalizableStrings.addRecord_iv42e37_caption.Value" Value="Add new" />
 			<Item Name="LocalizableStrings.addRecord_x461gch_caption.Value" Value="Add new" />
+			<Item Name="LocalizableStrings.Button_85zldy4_caption.Value" Value="Run process" />
+			<Item Name="LocalizableStrings.Button_f5cshya_caption.Value" Value="Run web service" />
 			<Item Name="LocalizableStrings.Button_qph1sc4_caption.Value" Value="Push!" />
 			<Item Name="LocalizableStrings.ExpansionPanel_eiywcgy_title.Value" Value="Realty visit" />
 			<Item Name="LocalizableStrings.GridDetailAddBtn_9hcdkyu_caption.Value" Value="New" />
@@ -14,6 +16,7 @@
 			<Item Name="LocalizableStrings.GridDetailRefreshBtn_280euxl_caption.Value" Value="Refresh" />
 			<Item Name="LocalizableStrings.GridDetailSearchFilter_7t5vrmh_placeholder.Value" Value="Search" />
 			<Item Name="LocalizableStrings.GridDetailSettingsBtn_5swtwi1_caption.Value" Value="Actions" />
+			<Item Name="LocalizableStrings.MenuItem_q0c8cf8_caption.Value" Value="Calc avg price" />
 			<Item Name="LocalizableStrings.NumberInput_4et5trf_label.Value" Value="Number" />
 		</Items>
 	</Group>

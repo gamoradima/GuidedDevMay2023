@@ -3,8 +3,11 @@
 	<Group Type="String">
 		<Items>
 			<Item Name="Caption" Value="Edit page: &quot;My Realty (Classic)&quot;" />
+			<Item Name="LocalizableStrings.MyButtonCaption.Value" Value="PUSH" />
+			<Item Name="LocalizableStrings.RunWebServiceButtonCaption.Value" Value="Run WebService" />
 			<Item Name="LocalizableStrings.Tab2c2af08cTabLabelTabCaption.Value" Value="Visits" />
 			<Item Name="LocalizableStrings.UsrSchemacf3405ddDetail345a6998DetailCaptionOnPage.Value" Value="Realty visit (Classic)" />
+			<Item Name="LocalizableStrings.ValueMustBeGreaterThanZero.Value" Value="Value must be greater than zero" />
 		</Items>
 	</Group>
 </Resources>
